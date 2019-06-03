@@ -38,13 +38,22 @@ int main(int argc, const char *argv[]) {
     std::vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
 
     // visualize results
-    bool bVis = true;
-    bool bVisKeyPoints = true;
+    bool bVis = false;
+    bool bVisKeyPoints = false;
     bool bFocusOnVehicle = true;
     bool bLimitKpts = true;
 
-    /* MAIN LOOP OVER ALL IMAGES */
+    double tTotal = 0;
+    int totalKeyPointsNum = 0;
+    int totalMatchesNum = 0;
 
+    // SHITOMASI, HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
+    std::string detectorType = "ORB";
+
+    // BRISK, BRIEF, ORB, FREAK, AKAZE, SIFT
+    std::string descriptorType = "AKAZE";
+
+    /* MAIN LOOP OVER ALL IMAGES */
     for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex++) {
         /* LOAD IMAGE INTO BUFFER */
 
@@ -72,7 +81,6 @@ int main(int argc, const char *argv[]) {
         }
 
         std::cout << std::endl;
-        std::cout << "Buffer size = " << dataBuffer.size() << std::endl;
 
         //// EOF STUDENT ASSIGNMENT
         std::cout << "#1 : LOAD IMAGE INTO BUFFER done" << std::endl;
@@ -82,28 +90,27 @@ int main(int argc, const char *argv[]) {
         // extract 2D keypoints from current image
         std::vector<cv::KeyPoint> keypoints; // create empty feature list for current image
 
-        std::string detectorType = "AKAZE";
+
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
         //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
 
         // Apply corner detection
-        auto t = (double)cv::getTickCount();
+        double t1 = 0;
 
         if ("SHITOMASI" == detectorType) {
-            detKeypointsShiTomasi(keypoints, imgGray);
+            t1 = detKeypointsShiTomasi(keypoints, imgGray);
         }
         else if ("HARRIS" == detectorType){
-            detKeypointsHarris(keypoints, imgGray);
+            t1 = detKeypointsHarris(keypoints, imgGray);
         }
         else {
             // FAST, BRISK, ORB, AKAZE, SIFT
-            detKeypointsModern(keypoints, imgGray, detectorType);
+            t1 = detKeypointsModern(keypoints, imgGray, detectorType);
         }
 
-        t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-        std::cout << detectorType << " detection with n = " << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << std::endl;
+        totalKeyPointsNum += keypoints.size();
 
         // visualize results
         if (bVisKeyPoints) {
@@ -158,8 +165,9 @@ int main(int argc, const char *argv[]) {
 
         // Descriptor is a vector of values, which describes the image patch around a keypoint
         cv::Mat descriptors;
-        std::string descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
-        descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
+
+        double t2 = 0;
+        t2 = descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
         //// EOF STUDENT ASSIGNMENT
 
         // push descriptors for current frame to end of data buffer
@@ -185,6 +193,7 @@ int main(int argc, const char *argv[]) {
                              (dataBuffer.end() - 2)->descriptors, (dataBuffer.end() - 1)->descriptors,
                              matches, descriptorTypeForMatching, matcherType, selectorType);
 
+            totalMatchesNum += matches.size();
             //// EOF STUDENT ASSIGNMENT
 
             // store matches in current data frame
@@ -208,7 +217,20 @@ int main(int argc, const char *argv[]) {
                 cv::waitKey(0); // wait for key to be pressed
             }
         }
+
+        tTotal += t1 + t2;
+
     } // eof loop over all images
+
+    std::cout << std::endl;
+    std::cout << "**************SUMMARY*************" << std::endl;
+    std::cout << detectorType << " + " << descriptorType << std::endl;
+    std::cout << "Total number of Key-points = " << totalKeyPointsNum << std::endl;
+    std::cout << "Total number of Matches = " << totalMatchesNum << std::endl;
+    std::cout << "Total Time Consumption = " << tTotal * 1000.0 << " ms" << std::endl;
+    std::cout << "Ratio = " << totalMatchesNum / (tTotal * 1000.0) << " matches/ms" << std::endl;
+
+    std::cout << "**********************************" << std::endl;
 
     return 0;
 }

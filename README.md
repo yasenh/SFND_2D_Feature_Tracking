@@ -32,3 +32,61 @@ See the classroom instruction and code comments for more details on each of thes
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./2D_feature_tracking`.
+
+
+
+## Benchmark
+
+#### Number of Key-points for 10 Images
+
+| Detectors | Number of Key-points |
+| :-------: | :------------------: |
+| SHITOMASI |        13423         |
+|  HARRIS   |         1737         |
+|   FAST    |        17874         |
+|   BRISK   |        27116         |
+|    ORB    |         5000         |
+|   AKAZE   |        13429         |
+|   SIFT    |                      |
+
+
+
+#### Number of Matched Key-points for 10 Images
+
+| Detectors\Descriptors | BRISK | BRIEF | ORB  | FREAK | AKAZE | SIFT |
+| :-------------------: | :---: | :---: | :--: | :---: | :---: | :--: |
+|       SHITOMASI       |  347  |  413  | 398  |  341  |       |      |
+|        HARRIS         |  141  |  206  | 162  |  144  |       |      |
+|         FAST          |  281  |  336  | 332  |  295  |       |      |
+|         BRISK         |  276  |  314  | 266  |  292  |       |      |
+|          ORB          |  339  |  267  | 347  |  327  |       |      |
+|         AKAZE         |  349  |  392  | 345  |  353  |  343  |      |
+|         SIFT          |       |       |      |       |       |      |
+
+
+
+#### Key-point Detection and Descriptor Extraction Time Consumption (in ms)
+
+| Detectors\Descriptors |  BRISK  |  BRIEF  |   ORB   |  FREAK  |  AKAZE  | SIFT |
+| :-------------------: | :-----: | :-----: | :-----: | :-----: | :-----: | :--: |
+|       SHITOMASI       | 98.8398 | 82.6777 | 91.0227 | 328.525 |         |      |
+|        HARRIS         | 106.512 | 96.1124 | 108.656 | 338.423 |         |      |
+|         FAST          | 12.7961 | 9.92533 | 12.1023 | 267.232 |         |      |
+|         BRISK         | 262.799 | 257.95  | 262.838 | 510.137 |         |      |
+|          ORB          | 53.0014 | 52.4011 | 58.3677 | 294.063 |         |      |
+|         AKAZE         | 387.531 | 383.136 | 378.456 | 584.215 | 753.823 |      |
+|         SIFT          |         |         |         |         |         |      |
+
+
+
+#### Efficiency (matches/ms)
+
+| Detectors\Descriptors |  BRISK   |  BRIEF  |   ORB    |  FREAK   |  AKAZE   | SIFT |
+| :-------------------: | :------: | :-----: | :------: | :------: | :------: | :--: |
+|       SHITOMASI       | 3.51073  | 4.9953  | 4.37254  | 1.03797  |          |      |
+|        HARRIS         |  1.3238  | 2.14332 | 1.49094  | 0.425504 |          |      |
+|         FAST          | 21.9598  | 33.8528 | 27.4329  | 1.10391  |          |      |
+|         BRISK         | 1.05023  | 1.21729 | 1.01203  | 0.572395 |          |      |
+|          ORB          | 6.39606  | 5.09532 | 5.94507  | 1.11201  |          |      |
+|         AKAZE         | 0.900572 | 1.02314 | 0.911598 | 0.60423  | 0.455014 |      |
+|         SIFT          |          |         |          |          |          |      |
