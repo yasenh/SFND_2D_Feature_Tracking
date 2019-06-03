@@ -38,7 +38,7 @@ int main(int argc, const char *argv[]) {
     std::vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
 
     // visualize results
-    bool bVis = false;
+    bool bVis = true;
     bool bVisKeyPoints = false;
     bool bFocusOnVehicle = true;
     bool bLimitKpts = true;
@@ -48,10 +48,10 @@ int main(int argc, const char *argv[]) {
     int totalMatchesNum = 0;
 
     // SHITOMASI, HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
-    std::string detectorType = "ORB";
+    std::string detectorType = "SHITOMASI";
 
     // BRISK, BRIEF, ORB, FREAK, AKAZE, SIFT
-    std::string descriptorType = "AKAZE";
+    std::string descriptorType = "BRISK";
 
     /* MAIN LOOP OVER ALL IMAGES */
     for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex++) {
@@ -217,9 +217,8 @@ int main(int argc, const char *argv[]) {
                 cv::waitKey(0); // wait for key to be pressed
             }
         }
-
+        // accumulate total time
         tTotal += t1 + t2;
-
     } // eof loop over all images
 
     std::cout << std::endl;
@@ -229,7 +228,6 @@ int main(int argc, const char *argv[]) {
     std::cout << "Total number of Matches = " << totalMatchesNum << std::endl;
     std::cout << "Total Time Consumption = " << tTotal * 1000.0 << " ms" << std::endl;
     std::cout << "Ratio = " << totalMatchesNum / (tTotal * 1000.0) << " matches/ms" << std::endl;
-
     std::cout << "**********************************" << std::endl;
 
     return 0;
