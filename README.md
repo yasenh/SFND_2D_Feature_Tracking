@@ -15,15 +15,71 @@ See the classroom instruction and code comments for more details on each of thes
 
 ## Rubric
 
-1. Data Buffer Optimization: Implement a vector for dataBuffer objects whose size does not exceed a limit (e.g. 2 elements). This can be achieved by pushing in new elements on one end and removing elements on the other end.
+1. Data Buffer Optimization: Implement a vector for dataBuffer objects whose size does not exceed a limit (e.g. 2 elements). 
+
+   ```
+   This can be achieved by pushing in new elements on one end and removing elements on the other end. First of all, we push the current image into data frame buffer, then we check if the buffer size is more then the max buffer size(dataBufferSize), if so we will pop out the first element to ensure the data frame buffer will not accumulate.
+   ```
+
+   
+
 2. Keypoint Detection: Implement detectors HARRIS, FAST, BRISK, ORB, AKAZE, and SIFT and make them selectable by setting a string accordingly.
+
+   ```
+   Based on the input string, we implemented 3 different functions: detKeypointsShiTomasi (Shi-Thomasi, Good Features to Track), detKeypointsHarris(Harris corner), detKeypointsModern(FAST, BRISK, ORB, AKAZE, and SIFT). In each function, we set up several parameters(block size, minimal distance, threshold...). Then OpenCV build-in detector class will be initialized with these parameters and scan the whole image to detect key-points. Also the detection time will be logged for performance evalution.
+   ```
+
+   
+
 3. Keypoint Removal: Remove all keypoints outside of a pre-defined rectangle and only use the keypoints within the rectangle for further processing.
+
+   ```
+   For this project, we will focus more on the preceding vehicle, so we set up a certain region of interest around the middle of the whole image. We will only keep the key-point that is in this area to reduce noise and save computation power for following steps.
+   ```
+
+   
+
 4. Keypoint Descriptors: Implement descriptors BRIEF, ORB, FREAK, AKAZE and SIFT and make them selectable by setting a string accordingly.
+
+   ```
+   
+   ```
+
+   
+
 5. Descriptor Matching: Implement FLANN matching as well as k-nearest neighbor selection. Both methods must be selectable using the respective strings in the main function.
+
+   ```
+   
+   ```
+
+   
+
 6. Descriptor Distance Ratio: Use the K-Nearest-Neighbor matching to implement the descriptor distance ratio test, which looks at the ratio of best vs. second-best match to decide whether to keep an associated pair of keypoints.
+
 7. Performance Evaluation 1: Count the number of keypoints on the preceding vehicle for all 10 images and take note of the distribution of their neighborhood size. Do this for all the detectors you have implemented.
+
+   ```
+   [Test](####number of key-points for 10 images)
+   ```
+
+   
+
 8. Performance Evaluation 2: Count the number of matched keypoints for all 10 images using all possible combinations of detectors and descriptors. In the matching step, the BF approach is used with the descriptor distance ratio set to 0.8.
+
+   ```
+   [Test](#rubric)
+   ```
+
+   
+
 9. Performance Evaluation 3: Log the time it takes for keypoint detection and descriptor extraction. The results must be entered into a spreadsheet and based on this data, the TOP3 detector / descriptor combinations must be recommended as the best choice for our purpose of detecting keypoints on vehicles.
+
+   ```
+   
+   ```
+
+   
 
 ## Dependencies for Running Locally
 * cmake >= 2.8
