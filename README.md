@@ -41,43 +41,49 @@ See the classroom instruction and code comments for more details on each of thes
 
 4. Keypoint Descriptors: Implement descriptors BRIEF, ORB, FREAK, AKAZE and SIFT and make them selectable by setting a string accordingly.
 
-   ```
    
-   ```
+
+   > 
 
    
 
 5. Descriptor Matching: Implement FLANN matching as well as k-nearest neighbor selection. Both methods must be selectable using the respective strings in the main function.
 
-   ```
    
-   ```
+
+   >
 
    
 
 6. Descriptor Distance Ratio: Use the K-Nearest-Neighbor matching to implement the descriptor distance ratio test, which looks at the ratio of best vs. second-best match to decide whether to keep an associated pair of keypoints.
 
+   
+
+   >d
+
+   
+
 7. Performance Evaluation 1: Count the number of keypoints on the preceding vehicle for all 10 images and take note of the distribution of their neighborhood size. Do this for all the detectors you have implemented.
 
-   ```
-   [Test](####number of key-points for 10 images)
-   ```
+   
+
+   [Performance Evaluation 1 - Number of Key-points for 10 Images](####number of key-points for 10 images)
 
    
 
 8. Performance Evaluation 2: Count the number of matched keypoints for all 10 images using all possible combinations of detectors and descriptors. In the matching step, the BF approach is used with the descriptor distance ratio set to 0.8.
 
-   ```
-   [Test](#rubric)
-   ```
+   
+
+   [Performance Evaluation 2 - Number of Matched Key-points for 10 Images](####number of matched key-points for 10 images)
 
    
 
 9. Performance Evaluation 3: Log the time it takes for keypoint detection and descriptor extraction. The results must be entered into a spreadsheet and based on this data, the TOP3 detector / descriptor combinations must be recommended as the best choice for our purpose of detecting keypoints on vehicles.
 
-   ```
    
-   ```
+
+   
 
    
 
