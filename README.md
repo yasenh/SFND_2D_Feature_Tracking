@@ -27,7 +27,7 @@ See the classroom instruction and code comments for more details on each of thes
 
    
 
-   >  Based on the input string, we implemented 3 different functions: detKeypointsShiTomasi (Shi-Thomasi, Good Features to Track), detKeypointsHarris(Harris corner), detKeypointsModern(FAST, BRISK, ORB, AKAZE, and SIFT). In each function, we set up several parameters(block size, minimal distance, threshold...). Then OpenCV build-in detector class will be initialized with these parameters and scan the whole image to detect key-points. Also the detection time will be logged for performance evalution.
+   >  Based on the input string, we implemented 3 different functions: detKeypointsShiTomasi (Shi-Thomasi, Good Features to Track), detKeypointsHarris(Harris corner), detKeypointsModern(FAST, BRISK, ORB, AKAZE, and SIFT). In each function, we set up several parameters(block size, minimal distance, threshold...). Then OpenCV build-in detector class will be initialized with these parameters and scan the whole image to detect key-points. Also the detection time will be logged for performance evaluation.
 
    
 
@@ -43,7 +43,7 @@ See the classroom instruction and code comments for more details on each of thes
 
    
 
-   > 
+   > Descriptor is a vector of values, which describes the image patch around a keypoint. Similar to step 2, we implement a function to detection descriptors based on the input string. We still use OpenCV build-in descriptors (BRIEF, ORB, FREAK, AKAZE and SIFT) class with default parameters to uniquely identify keypoints. Similar to step 2, we log the descriptor extraction time for performance evaluation.
 
    
 
@@ -51,7 +51,7 @@ See the classroom instruction and code comments for more details on each of thes
 
    
 
-   >
+   >User can choose which matching method to use: Brute-force matcher(MAT_BF) or FLANN matcher(MAT_FLANN). Note that we need to convert our image to CV_32F type due to  a bug in current OpenCV implementation if we choose FLANN matching.
 
    
 
@@ -59,7 +59,9 @@ See the classroom instruction and code comments for more details on each of thes
 
    
 
-   >d
+   >Both nearest neighbor (best match) and K nearest neighbors (default k=2) are implemented. For KNN matching, we filter matches using descriptor distance ratio test to remove some outliers. In current implementation, only following match will be accepted:
+   >
+   > knn_match[0].distance < 0.9 * knn_match[1].distance
 
    
 
@@ -67,7 +69,7 @@ See the classroom instruction and code comments for more details on each of thes
 
    
 
-   [Performance Evaluation 1 - Number of Key-points for 10 Images](####number of key-points for 10 images)
+   [Performance Evaluation 1 - Number of Key-points for 10 Images](#benchmark)
 
    
 
@@ -75,11 +77,15 @@ See the classroom instruction and code comments for more details on each of thes
 
    
 
-   [Performance Evaluation 2 - Number of Matched Key-points for 10 Images](####number of matched key-points for 10 images)
+   [Performance Evaluation 2 - Number of Matched Key-points for 10 Images](#benchmark)
 
    
 
 9. Performance Evaluation 3: Log the time it takes for keypoint detection and descriptor extraction. The results must be entered into a spreadsheet and based on this data, the TOP3 detector / descriptor combinations must be recommended as the best choice for our purpose of detecting keypoints on vehicles.
+
+   
+
+   [Performance Evaluation 3 - Key-point Detection and Descriptor Extraction Time Consumption](#benchmark)
 
    
 
